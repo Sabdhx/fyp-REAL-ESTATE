@@ -11,6 +11,7 @@ function SinglePage() {
   const post = useLoaderData();
   const [saved, setSaved] = useState(post.isSaved);
   const { currentUser } = useContext(AuthContext);
+  console.log("userId "+currentUser.id)
   const navigate = useNavigate();
  console.log(post.userId)
   const handleSave = async () => {
@@ -30,8 +31,9 @@ function SinglePage() {
 
   const sendMessage =async () =>{
     console.log("message")
+    navigate("/profile")
     try {
-      await apiRequest.post(`api/chats`,{receiverId:post.userId});
+      await apiRequest.post(`/chats`,{userId:currentUser.id,receiverId:post.userId });
       
     } catch (error) {
       console.log(error)

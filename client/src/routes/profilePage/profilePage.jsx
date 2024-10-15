@@ -55,7 +55,7 @@ function ProfilePage() {
             <Await
               resolve={data.postResponse}
               errorElement={<p>Error loading posts!</p>}
-            >
+            >;
               {(postResponse) => <List posts={postResponse.data.userPosts} />}
             </Await>
           </Suspense>

@@ -10,7 +10,7 @@ function Chat({ chats }) {
   const [chat, setChat] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const { socket } = useContext(SocketContext);
-
+console.log(chat)
   const messageEndRef = useRef();
 
   const decrease = useNotificationStore((state) => state.decrease);

@@ -18,6 +18,7 @@ function HomePage() {
             facilis id pariatur fugit quos laudantium temporibus dolor ea
             repellat provident impedit!
           </p>
+          <h1></h1>
           <SearchBar />
           <div className="boxes">
             <div className="box">
