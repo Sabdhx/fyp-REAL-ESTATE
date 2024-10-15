@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import prisma from "../lib/prisma.js";
+import { config } from "dotenv";
 
 export const register = async (req, res) => {
   const { username, email, password } = req.body;
@@ -59,7 +60,7 @@ export const login = async (req, res) => {
         id: user.id,
         isAdmin: false,
       },
-      "secret",
+      process.env.secretKey,
       { expiresIn: age }
     );
 

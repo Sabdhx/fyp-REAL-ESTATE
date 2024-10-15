@@ -1,3 +1,4 @@
+import { config } from "dotenv";
 import prisma from "../lib/prisma.js";
 import jwt from "jsonwebtoken";
 
@@ -46,7 +47,7 @@ export const getPost = async (req, res) => {
     const token = req.cookies?.token;
 
     if (token) {
-      jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, payload) => {
+      jwt.verify(token, process.env.secretKey, async (err, payload) => {
         if (!err) {
           const saved = await prisma.savedPost.findUnique({
             where: {
