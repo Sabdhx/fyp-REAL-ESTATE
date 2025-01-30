@@ -47,7 +47,7 @@ export const getPost = async (req, res) => {
     const token = req.cookies?.token;
 
     if (token) {
-      jwt.verify(token, process.env.secretKey, async (err, payload) => {
+      jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, payload) => {
         if (!err) {
           const saved = await prisma.savedPost.findUnique({
             where: {
@@ -57,7 +57,7 @@ export const getPost = async (req, res) => {
               },
             },
           });
-          res.status(200).json({ ...post,userId, isSaved: saved ? true : false });
+          res.status(200).json({ ...post, isSaved: saved ? true : false });
         }
       });
     }
@@ -99,25 +99,33 @@ export const updatePost = async (req, res) => {
 };
 
 export const deletePost = async (req, res) => {
-  const id = req.params.id;
-  const tokenUserId = req.userId;
+  console.log("first")
+//   const id = req.params.id;
+//   const tokenUserId = req.userId;
+//   const postId = req.body.postId;
+//   try {
+//     // const post = await prisma.post.findUnique({
+//     //   where: { id },
+//     // });
 
-  try {
-    const post = await prisma.post.findUnique({
-      where: { id },
-    });
+//     // const postDetail = await prisma.postDetail.findUnique({
+//     //   where: { postId },
+//     // });
 
-    if (post.userId !== tokenUserId) {
-      return res.status(403).json({ message: "Not Authorized!" });
-    }
+//     // console.log("post ", post);
+//     // console.log("postDetail ", postDetail);
+//     await prisma.postDetail.delete({
+//       where: { postId },
+//     });
+//     await prisma.post.delete({
+//       where: { id },
+//     });
 
-    await prisma.post.delete({
-      where: { id },
-    });
+  
 
-    res.status(200).json({ message: "Post deleted" });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Failed to delete post" });
-  }
+//     res.status(200).json({ message: "Post deleted" });
+//   } catch (err) {
+//     console.log(err.message)
+//     // res.status(500).json({ message: "Failed to delete post" });
+//   }
 };

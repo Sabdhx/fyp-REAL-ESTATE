@@ -10,7 +10,7 @@ function Chat({ chats }) {
   const [chat, setChat] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const { socket } = useContext(SocketContext);
-console.log(chat)
+  console.log(chat)
   const messageEndRef = useRef();
 
   const decrease = useNotificationStore((state) => state.decrease);
@@ -26,6 +26,7 @@ console.log(chat)
         decrease();
       }
       setChat({ ...res.data, receiver });
+
     } catch (err) {
       console.log(err);
     }
@@ -78,22 +79,22 @@ console.log(chat)
       <div className="messages">
         <h1>Messages</h1>
         {chats?.map((c) => (
-          <div
-            className="message"
-            key={c.id}
-            style={{
-              backgroundColor:
-                c.seenBy.includes(currentUser.id) || chat?.id === c.id
-                  ? "white"
-                  : "#fecd514e",
-            }}
-            onClick={() => handleOpenChat(c.id, c.receiver)}
-          >
-            <img src={c.receiver.avatar || "/noavatar.jpg"} alt="" />
-            <span>{c.receiver.username}</span>
-            <p>{c.lastMessage}</p>
-          </div>
-        ))}
+  <div
+    className="message"
+    key={c.id}
+    style={{
+      backgroundColor:
+        chat?.id === c.id || c.seenBy.includes(currentUser.id)
+          ? "white"
+          : "#fecd514e",
+    }}
+    onClick={() => handleOpenChat(c.id, c.receiver)}
+  >
+    <img src={c.receiver.avatar || "/noavatar.jpg"} alt="" />
+    <span>{c.receiver.username}</span>
+    <p>{c.lastMessage}</p>
+  </div>
+))}
       </div>
       {chat && (
         <div className="chatBox">

@@ -5,6 +5,7 @@ import apiRequest from "../../lib/apiRequest";
 import { Await, Link, useLoaderData, useNavigate } from "react-router-dom";
 import { Suspense, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import SavedPostList from "../../components/SavedlIst/SavedPostList";
 
 function ProfilePage() {
   const data = useLoaderData();
@@ -55,7 +56,7 @@ function ProfilePage() {
             <Await
               resolve={data.postResponse}
               errorElement={<p>Error loading posts!</p>}
-            >;
+            >
               {(postResponse) => <List posts={postResponse.data.userPosts} />}
             </Await>
           </Suspense>
@@ -67,7 +68,7 @@ function ProfilePage() {
               resolve={data.postResponse}
               errorElement={<p>Error loading posts!</p>}
             >
-              {(postResponse) => <List posts={postResponse.data.savedPosts} />}
+              {(postResponse) => <SavedPostList posts={postResponse.data.savedPosts} />}
             </Await>
           </Suspense>
         </div>

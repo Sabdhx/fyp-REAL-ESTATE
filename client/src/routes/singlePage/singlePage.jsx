@@ -11,9 +11,8 @@ function SinglePage() {
   const post = useLoaderData();
   const [saved, setSaved] = useState(post.isSaved);
   const { currentUser } = useContext(AuthContext);
-  console.log("userId "+currentUser.id)
   const navigate = useNavigate();
- console.log(post.userId)
+  console.log(post);
   const handleSave = async () => {
     if (!currentUser) {
       navigate("/login");
@@ -27,19 +26,32 @@ function SinglePage() {
       setSaved((prev) => !prev);
     }
   };
-
-
-  const sendMessage =async () =>{
-    console.log("message")
-    navigate("/profile")
+  console.log("post " + post.user.username);
+  console.log("token " + currentUser.username);
+  const sendMessage = async () => {
+    console.log("message");
+    navigate("/profile");
     try {
-      await apiRequest.post(`/chats`,{userId:currentUser.id,receiverId:post.userId });
-      
+      await apiRequest.post(`/chats`, {
+        userId: currentUser.id,
+        receiverId: post.userId,
+      });
+      window.location.reload();
     } catch (error) {
-      console.log(error)
-
+      console.log(error);
     }
-  }
+  };
+  const deletePost = async (id) => {
+    console.log("first")
+  //   console.log(id);
+  //   const response = await apiRequest.delete(`posts/${id}`, {
+  //     data: { postId: post.postDetail.postId },
+  //     withCredentials: true,
+  //   });
+  //   if (response) {
+  //     navigate(-1);
+  //   }
+  };
 
   return (
     <div className="singlePage">
@@ -166,6 +178,20 @@ function SinglePage() {
               <img src="/save.png" alt="" />
               {saved ? "Place Saved" : "Save the Place"}
             </button>
+            {post?.user?.username === currentUser.username ? (
+              <>
+                <button
+                  onClick={() => deletePost(post.id)}
+                  style={{
+                    backgroundColor: saved ? "#fece51" : "white",
+                  }}
+                >
+                  delete post
+                </button>
+              </>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>
